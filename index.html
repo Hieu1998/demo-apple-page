@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet">
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 </head>
 <body>
 
@@ -30,6 +31,12 @@
                 <li><a href="#">Apple Watch</a></li>
                 <li><a href="#">Products</a></li>
                 <li><a href="#">Contact</a></li>
+                <li><button id="fb-login-btn">Log in with Facebook</button></li>
+                
+<fb:login-button 
+  scope="public_profile,email"
+  onlogin="checkLoginState();">
+</fb:login-button>
             </ul>
             </nav>
 
@@ -482,7 +489,44 @@
         </div>
     </div>
 </div>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1259836914601464',
+      cookie     : true,
+      xfbml      : true,
+      version    : '{api-version}'
+    });
+      
+    FB.AppEvents.logPageView();   
+      
+  };
 
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+    
+    
+function checkLoginState() {
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+}
+
+document.getElementById('fb-login-btn').addEventListener('click', function() {
+  FB.login(function(response) {
+    if (response.authResponse) {
+      console.log('User is logged in and authenticated');
+    } else {
+      console.log('User cancelled login or did not fully authorize.');
+    }
+  });
+});
+</script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 </body>
