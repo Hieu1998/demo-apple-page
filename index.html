@@ -31,12 +31,7 @@
                 <li><a href="#">Apple Watch</a></li>
                 <li><a href="#">Products</a></li>
                 <li><a href="#">Contact</a></li>
-                <li><button id="fb-login-btn" onclick="checkLoginState()">Log in with Facebook</button></li>
-                
-<fb:login-button 
-  scope="public_profile,email"
-  onlogin="checkLoginState();">
-</fb:login-button>
+                <li><button id="fb-login-btn">Log in with Facebook</button></li>
             </ul>
             </nav>
 
@@ -493,14 +488,25 @@
   window.fbAsyncInit = function() {
     FB.init({
       appId      : '1259836914601464',
-      cookie     : true,
-      xfbml      : true,
-      version    : 'v12'
+      ccookie     : true,
+    xfbml      : true,
+    version    : 'v12.0'
     });
       
     FB.AppEvents.logPageView();   
       
   };
+    
+    document.getElementById('fb-login-btn').addEventListener('click', function() {
+  FB.login(function(response) {
+    if (response.authResponse) {
+      console.log('User is logged in and authenticated');
+    } else {
+      console.log('User cancelled login or did not fully authorize.');
+    }
+  });
+});
+
 
   (function(d, s, id){
      var js, fjs = d.getElementsByTagName(s)[0];
@@ -511,11 +517,6 @@
    }(document, 'script', 'facebook-jssdk'));
     
     
-function checkLoginState() {
-  FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-  });
-}
 </script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
